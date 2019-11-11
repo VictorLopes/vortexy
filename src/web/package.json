@@ -1,0 +1,15 @@
+{
+  "name": "vortexy.js",
+  "version": "0.1.0",
+  "description": "vortexy.js is a JavaScript framework to build online multiplayer games.",
+  "main": "vortexy.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parcel server './public/index.html' --port 8080"
+  },
+  "author": "Victor Lopes",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^1.12.4"
+  }
+}

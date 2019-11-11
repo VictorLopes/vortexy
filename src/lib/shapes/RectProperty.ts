@@ -1,0 +1,55 @@
+import Property from './Property';
+
+export default class RectPropery extends Property {
+
+    private _width: number;
+    private _height: number;
+
+    constructor(screen: HTMLCanvasElement | null) {
+        super(screen);
+        this._property = this;
+        this._width = 1;
+        this._height = 1;
+    }
+
+    public x(value: number): RectPropery {
+        return super.x(value) as RectPropery;
+    }
+
+    public y(value: number): RectPropery {
+        return super.y(value) as RectPropery;
+    }
+
+    public color(value: string): RectPropery {
+        return super.color(value) as RectPropery;
+    }
+
+    /* ================================================= */
+
+    public width(value: number): RectPropery {
+        this._width = value;
+        return this._property as RectPropery;
+    }
+
+    public height(value: number): RectPropery {
+        this._height = value;
+        return this._property as RectPropery;
+    }
+
+    public render(): CanvasRenderingContext2D | null {
+        super.render();
+        const screen: HTMLCanvasElement | null = this._screen;
+        if (screen) {
+            const context: CanvasRenderingContext2D | null = screen.getContext('2d');
+            if (context) {
+                context.fillStyle = this._color;
+                context.beginPath();
+                context.rect(this._x, this._y, this._width, this._height);
+                context.closePath();
+                context.fill();
+                return context;
+            }
+        }
+        return null;
+    }
+}
