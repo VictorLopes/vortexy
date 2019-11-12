@@ -1,4 +1,5 @@
 import Property from './Property';
+import CanvasObject from '../CanvasObject';
 
 export default class RectPropery extends Property {
 
@@ -36,7 +37,7 @@ export default class RectPropery extends Property {
         return this._property as RectPropery;
     }
 
-    public render(): CanvasRenderingContext2D | null {
+    public render(): CanvasObject | null {
         super.render();
         const screen: HTMLCanvasElement | null = this._screen;
         if (screen) {
@@ -47,7 +48,7 @@ export default class RectPropery extends Property {
                 context.rect(this._x, this._y, this._width, this._height);
                 context.closePath();
                 context.fill();
-                return context;
+                return new CanvasObject(context);
             }
         }
         return null;

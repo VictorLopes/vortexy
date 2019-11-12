@@ -1,5 +1,5 @@
 import Shape from './shape';
-import Property from './shapes/Property';
+import Property, { PropertyType } from './shapes/Property';
 
 export class App {
 
@@ -10,7 +10,7 @@ export class App {
     private _app: HTMLElement | null;
     private _screen: HTMLCanvasElement | null;
     private _message: string;
-    private _shapes: Array<Property>;
+    private _shapes: PropertyType;
 
     constructor(fps: number = 30, width: number = 800, height: number = 600, center: boolean = true) {
         this._fps = fps;
@@ -20,7 +20,11 @@ export class App {
         this._app = null;
         this._screen = null;
         this._message = `Your browser does not support the HTML5 canvas!`;
-        this._shapes = [];
+        this._shapes = {
+            circle: [],
+            line: [],
+            rect: []
+        }
         this._initScreen();
     }
 
@@ -45,24 +49,30 @@ export class App {
         }
     }
 
-    draw(): Shape {
+    public draw(): Shape {
         const shape: Shape = new Shape(this._screen, this._shapes);
         return shape;
     }
 
-    run(callback: Function = () => { }): void {
+    public run(callback: Function = () => { }): void {
         window.onload = () => {
+            const keys: Array<string> = Object.keys(this._shapes);
+
             window.setInterval(() => {
                 this.clear();
-                this._shapes.forEach(shape => {
-                    shape.render();
-                })
+
+                keys.forEach(async (key: string) => {
+                    this._shapes[key as keyof PropertyType].forEach(shape => {
+                        shape.render();
+                    });
+                });
+
                 callback();
             }, this._fps);
         };
     }
 
-    clear(): void {
+    public clear(): void {
         if (this._screen) {
             const context: CanvasRenderingContext2D | null = this._screen.getContext('2d');
             if (context) {
@@ -71,15 +81,33 @@ export class App {
         }
     }
 
-    get width(): number {
+    public onMouseDown(callback: EventListenerObject): void {
+        if (this._screen) {
+            this._screen.addEventListener('mousedown', callback);
+        }
+    }
+
+    public onMouseUp(callback: EventListenerObject): void {
+        if (this._screen) {
+            this._screen.addEventListener('mouseup', callback);
+        }
+    }
+
+    public onMouseMove(callback: EventListenerObject): void {
+        if (this._screen) {
+            this._screen.addEventListener('mousemove', callback);
+        }
+    }
+
+    public get width(): number {
         return this._width;
     }
 
-    get height(): number {
+    public get height(): number {
         return this._height;
     }
 
-    get fps(): number {
+    public get fps(): number {
         return this._fps;
     }
 }

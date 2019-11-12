@@ -1,3 +1,13 @@
+class CanvasObject {
+
+}
+
+export interface PropertyType {
+    circle: Array<Property>,
+    line: Array<Property>,
+    rect: Array<Property>
+}
+
 export default class Property {
 
     protected _property: Property;
@@ -24,9 +34,17 @@ export default class Property {
         return this._property;
     }
 
+    public getX(): number {
+        return this._x;
+    }
+
     public y(value: number): Property {
         this._y = value;
         return this._property;
+    }
+
+    public getY(): number {
+        return this._y;
     }
 
     public color(value: string = 'gold'): Property {
@@ -34,7 +52,7 @@ export default class Property {
         return this._property;
     }
 
-    public render(): CanvasRenderingContext2D | null {
+    public render(): CanvasObject | null {
         return null;
     }
 }

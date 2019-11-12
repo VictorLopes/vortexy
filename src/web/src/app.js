@@ -2,13 +2,19 @@ import { vertexy } from '../vortexy/index';
 
 var app = new vertexy.App(30);
 
-app.draw()
-    .circle().x(20).y(20).radius(20);
+let o = app.draw()
+    .circle().x(20).y(20).radius(20).render();
 
-app.draw()
-    .line().x(0).y(0).x2(200).y2(200).thickness(9);
+app.onMouseDown((event) => {
+    o.dragDown(event);
+});
 
-app.draw()
-    .rect().x(150).y(50).width(100).height(100);
+app.onMouseMove((event) => {
+    o.dragMove(event);
+});
+
+app.onMouseUp((event) => {
+    o.dragUp(event);
+});
 
 app.run();
