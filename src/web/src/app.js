@@ -1,6 +1,6 @@
-import { vertexy } from '../../vortexy/index';
+import { vortexy } from '../../vortexy/lib';
 
-var app = new vertexy.App(30);
+var app = new vortexy.App(30);
 
 let o = app.draw()
     .circle().x(20).y(20).radius(20).throttle(5).render();
