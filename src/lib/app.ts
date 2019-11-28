@@ -57,7 +57,6 @@ export class App {
     public run(callback: Function = () => { }): void {
         window.onload = () => {
             const keys: Array<string> = Object.keys(this._shapes);
-
             window.setInterval(() => {
                 this.clear();
 
@@ -81,6 +80,14 @@ export class App {
         }
     }
 
+
+    /*
+     * ===============================================================================
+     * EVENTS
+     * ===============================================================================
+     */
+
+
     public onMouseDown(callback: EventListenerObject): void {
         if (this._screen) {
             this._screen.addEventListener('mousedown', callback);
@@ -98,6 +105,26 @@ export class App {
             this._screen.addEventListener('mousemove', callback);
         }
     }
+
+    public onKeyDown(callback: EventListenerObject): void {
+        document.addEventListener('keydown', callback);
+    }
+
+    public onKeyUp(callback: EventListenerObject): void {
+        document.addEventListener('keyup', callback);
+    }
+
+    public onKeyPress(callback: EventListenerObject): void {
+        document.addEventListener('keypress', callback);
+    }
+
+
+    /*
+     * ===============================================================================
+     * EVENTS END
+     * ===============================================================================
+     */
+
 
     public get width(): number {
         return this._width;

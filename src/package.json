@@ -8,7 +8,15 @@
   },
   "author": "Victor Lopes",
   "license": "MIT",
+  "dependencies": {
+    "@types/socket.io": "^2.1.4",
+    "@types/socket.io-client": "^1.4.32",
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0",
+    "socket.io-client": "^2.3.0"
+  },
   "devDependencies": {
-    "typescript": "^3.6.4"
+    "typescript": "^3.6.4",
+    "nodemon": "^2.0.1"
   }
 }

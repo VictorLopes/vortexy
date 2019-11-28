@@ -1,98 +1,118 @@
 #!/bin/bash
 
 this_help() {
-  echo
-  echo '============================[ vortexy build tool ]============================'
-  echo '-h | --help  : This help.'
-  echo '-c | --clear : Remove an existing "build" directory.'
-  echo '-b | --build : Compile and make a directory colled "build" with project files.'
-  echo '-i | --auto-install : Same as "npm install" inside the directory "build".'
-  echo '-s | --start : Same as "npm start" inside the directory "build".'
-  echo '=============================================================================='
-  echo
+	echo
+	echo '============================[ vortexy build tool ]============================'
+	echo '-h | help  : This help.'
+	echo '-c | clear : Remove an existing "build" directory.'
+	echo '-b | build : Compile project files.'
+	echo '-i | install : Same as "npm install" inside the directory "build".'
+	echo '-ss | start-server : Same as run "npm run server" inside the directory "build".'
+	echo '-sw | start-web : Same as run "npm run web" inside the directory "build".'
+	echo '=============================================================================='
+	echo
 }
 
 clear() {
-  if [ -d "$DIRECTORY" ]; then
-    rm -R ./build
-  fi
+	if [ -d "$DIRECTORY" ]; then
+		rm -R ./build
+	fi
 }
 
 build() {
-  cd ./src
-  npx tsc
-  cp -R ./web/* ../build
-  cd ..
+	cd ./src
+	npx tsc
+	cp -R ./web ../build/ &
+	cp -R ./server ../build/ &
+	cp ./package/package.json ../build/
+	cd ..
 }
 
 autoinstall() {
-  cd ./build
-  npm install
-  cd ..
+	cd ./build
+	npm install
+	cd ..
 }
 
-start() {
-  cd ./build
-  clear
-  npm start
+startweb() {
+	cd ./build
+	clear
+	npm run web
+}
+
+startserver() {
+	cd ./build
+	clear
+	npm run server
 }
 
 CLEAR=false
 BUILD=false
 AUTO_INSTALL=false
-START=FALSE
+START_WEB=false
+START_SERVEr=false
 
 for arg; do
-  case "$arg" in
-  --clear)
-    CLEAR=true
-    ;;
-  -c)
-    CLEAR=true
-    ;;
-  --build)
-    BUILD=true
-    ;;
-  -b)
-    BUILD=true
-    ;;
-  --auto-install)
-    AUTO_INSTALL=true
-    ;;
-  -i)
-    AUTO_INSTALL=true
-    ;;
-  --start)
-    START=true
-    ;;
-  -s)
-    START=true
-    ;;
-  --help)
-    this_help
-    ;;
-  -h)
-    this_help
-    ;;
-  *)
-    echo "Unknown argument"
-    exit 1
-    ;;
-  esac
+	case "$arg" in
+	clear)
+		CLEAR=true
+		;;
+	-c)
+		CLEAR=true
+		;;
+	build)
+		BUILD=true
+		;;
+	-b)
+		BUILD=true
+		;;
+	install)
+		AUTO_INSTALL=true
+		;;
+	-i)
+		AUTO_INSTALL=true
+		;;
+	start-web)
+		START_WEB=true
+		;;
+	-sw)
+		START_WEB=true
+		;;
+	start-server)
+		START_SERVER=true
+		;;
+	-ss)
+		START_SERVER=true
+		;;
+	help)
+		this_help
+		;;
+	-h)
+		this_help
+		;;
+	*)
+		echo "Unknown argument"
+		exit 1
+		;;
+	esac
 done
 
 if [ "$CLEAR" = true ]; then
-  clear
+	clear
 fi
 
 if [ "$BUILD" = true ]; then
-  build
+	build
 fi
 
 if [ "$AUTO_INSTALL" = true ]; then
-  autoinstall
+	autoinstall
 fi
 
-if [ "$START" = true ]; then
-  start
+if [ "$START_WEB" = true ]; then
+	startweb
+fi
+
+if [ "$START_SERVER" = true ]; then
+	startserver
 fi
